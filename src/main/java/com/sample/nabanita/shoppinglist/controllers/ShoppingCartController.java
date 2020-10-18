@@ -1,4 +1,5 @@
 package com.sample.nabanita.shoppinglist.controllers;
+import org.springframework.http.HttpStatus;
 
 import com.sample.nabanita.shoppinglist.model.ProductInfo;
 import com.sample.nabanita.shoppinglist.services.ProductServices;
@@ -20,12 +21,14 @@ public class ShoppingCartController {
     }
 
     @GetMapping
-    ResponseEntity<List<ProductInfo>> getProducts(@RequestParam(name = "owner") String owner) {
-        return new ResponseEntity<List<ProductInfo>>(productServices.getAllProductInfo(owner), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductInfo> getProducts(@RequestParam(name = "owner") String owner) {
+        return productServices.getAllProductInfo(owner);
     }
 
     @PostMapping
-    ResponseEntity<ProductInfo> postProduct(@RequestBody ProductInfo productInfo) {
-        return new ResponseEntity<ProductInfo>(productServices.addProduct(productInfo), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public ProductInfo postProduct(@RequestBody ProductInfo productInfo) {
+        return productServices.addProduct(productInfo);
     }
 }
